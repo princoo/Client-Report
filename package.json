@@ -1,0 +1,51 @@
+{
+  "name": "clientreport",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && node dist/index.js",
+    "build": "babel src -d dist",
+    "prepare": "husky install",
+    "lint": "eslint \"src/**/*.{js,css,html,json,md}\"",
+    "lint:staged": "lint-staged",
+    "lint:fix": "eslint --fix --ext .js .",
+    "prettier:fix": "prettier --write \"src/**/*.{js,css,html,json,md}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/princoo/Client-Report.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/princoo/Client-Report/issues"
+  },
+  "homepage": "https://github.com/princoo/Client-Report#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^8.0.0",
+    "prettier": "3.2.5",
+    "webpack": "^5.90.1"
+  },
+  "lint-staged": {
+    "src/**/*.{js,css,html,json,md}": [
+      "npm run prettier:fix",
+      "npm run lint:fix",
+      "npm run test",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
