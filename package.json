@@ -10,7 +10,16 @@
     "lint": "eslint \"src/**/*.{js,css,html,json,md}\"",
     "lint:staged": "lint-staged",
     "lint:fix": "eslint --fix --ext .js .",
-    "prettier:fix": "prettier --write \"src/**/*.{js,css,html,json,md}\""
+    "prettier:fix": "prettier --write \"src/**/*.{js,css,html,json,md}\"",
+    "make_model": "npx sequelize-cli model:generate --name",
+    "make_migration": "npx sequelize-cli migration:create --name",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate_undo": " npx sequelize-cli db:migrate:undo",
+    "migrate_undo_all": "npx sequelize-cli db:migrate:undo:all",
+    "make_seed": " npx sequelize-cli seed:generate --name",
+    "seed": " npx sequelize-cli db:seed:all",
+    "seed_undo": " npx sequelize-cli db:seed:undo",
+    "seed_undo_all": " npx sequelize-cli db:seed:undo:all"
   },
   "repository": {
     "type": "git",
@@ -26,7 +35,9 @@
   "devDependencies": {
     "@babel/cli": "^7.23.9",
     "@babel/core": "^7.23.9",
+    "@babel/node": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
+    "@babel/register": "^7.23.7",
     "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.1.0",
@@ -35,6 +46,7 @@
     "eslint-plugin-prettier": "^5.1.3",
     "husky": "^8.0.0",
     "prettier": "3.2.5",
+    "sequelize-cli": "^6.6.2",
     "webpack": "^5.90.1"
   },
   "lint-staged": {
@@ -46,6 +58,19 @@
     ]
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "core-js": "^3.35.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.2",
+    "express": "^4.18.2",
+    "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
+    "passport": "^0.7.0",
+    "passport-google-oauth": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.11.3",
+    "sequelize": "^6.37.0",
+    "uuid": "^9.0.1"
   }
 }
