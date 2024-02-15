@@ -12,6 +12,7 @@ const signup = async (req, res, next) => {
           id: user.id,
           email: user.email,
           role: user.role,
+          siteId: req.site.id,
           status: user.status,
         };
         // generate token

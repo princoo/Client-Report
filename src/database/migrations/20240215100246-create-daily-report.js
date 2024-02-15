@@ -1,10 +1,10 @@
-import { v4 as uuidv4 } from 'uuid';
 import { DataTypes } from 'sequelize';
+import { v4 as uuidv4 } from 'uuid';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('dailyReports', {
       id: {
         allowNull: false,
         defaultValue: uuidv4,
@@ -12,51 +12,38 @@ module.exports = {
         type: DataTypes.UUID,
         unique: true,
       },
-      firstName: {
+      clientName: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      lastName: {
+      activityDone: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password: {
+      discussedIssues: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      site: {
+      CatId: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: 'Sites',
+          model: 'Users',
           key: 'id',
         },
         onDelete: 'CASCADE',
       },
-      role: {
-        type: DataTypes.ENUM('CATS', 'CATS_MENTOR'),
-        defaultValue: 'CATS',
-      },
-      status: {
-        type: DataTypes.ENUM('INACTIVE', 'ACTIVE'),
-        defaultValue: 'ACTIVE',
-      },
       createdAt: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
       },
     });
   },
   async down(queryInterface) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('dailyReports');
   },
 };
