@@ -6,12 +6,8 @@ async function getUserByEmail(email) {
 }
 
 async function createUser(details) {
-  // try {
   const user = await User.create(details);
   return user;
-  // } catch (error) {
-  //    console.log('errr',error)
-  // }
 }
 
 export default {

@@ -46,17 +46,21 @@ passport.use(
       passwordField: 'password',
     },
     async (email, password, done) => {
-      const user = await userServices.getUserByEmail(email);
-      if (user) {
-        const passCheck = await comparePassword(password, user.password);
-        if (passCheck) {
-          return done(null, user.dataValues, {
-            message: 'Logged In Successfully',
-          });
+      try {
+        const user = await userServices.getUserByEmail(email);
+        if (user) {
+          const passCheck = await comparePassword(password, user.password);
+          if (passCheck) {
+            return done(null, user.dataValues, {
+              message: 'Logged In Successfully',
+            });
+          }
+          return done(null, false, { message: 'Password is incorrect' });
         }
-        return done(null, false, { message: 'Password is incorrect' });
+        return done(null, false, { message: 'User not Found.' });
+      } catch (error) {
+        done(error);
       }
-      return done(null, false, { message: 'User not Found.' });
     },
   ),
 );
