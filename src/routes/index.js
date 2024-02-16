@@ -4,7 +4,11 @@ import '../middleware/passport.middleware';
 import asyncWrapperHelper from '../helpers/asyncWrapper.helper';
 import validate from '../middleware/validation/validation.middleware';
 import userEmailExists from '../middleware/auth/userExists';
-import { DailyReport } from '../controllers/report.controller';
+import reportController from '../controllers/report.controller';
+import checkPermission, {
+  isAuthenticated,
+} from '../middleware/auth/authentication';
+
 import {
   siteSchema,
   reportSchema,
@@ -17,6 +21,7 @@ import {
   siteExists,
   siteNameExists,
 } from '../middleware/site/siteExists';
+import { isReportOwner, reportExists } from '../middleware/report.middleware';
 
 const router = express.Router();
 
@@ -48,10 +53,35 @@ router.delete(
   asyncWrapperHelper(isValidSite),
   asyncWrapperHelper(removeSite),
 );
+router.get(
+  '/report/all',
+  isAuthenticated,
+  asyncWrapperHelper(reportController.getReports),
+);
 router.post(
   '/report/daily',
   validate(reportSchema.dailyReportSchema),
-  asyncWrapperHelper(DailyReport),
+  isAuthenticated,
+  checkPermission('CATS'),
+  asyncWrapperHelper(reportController.DailyReport),
+);
+router.patch(
+  '/report/update/:rid',
+  validate(reportSchema.updateReportSchema),
+  asyncWrapperHelper(isAuthenticated),
+  checkPermission('CATS'),
+  asyncWrapperHelper(reportExists),
+  asyncWrapperHelper(isReportOwner),
+  asyncWrapperHelper(reportController.updateReport),
+);
+router.delete(
+  '/report/delete/:rid',
+  validate(reportSchema.updateReportSchema),
+  asyncWrapperHelper(isAuthenticated),
+  checkPermission('CATS'),
+  asyncWrapperHelper(reportExists),
+  asyncWrapperHelper(isReportOwner),
+  asyncWrapperHelper(reportController.deleteReport),
 );
 
 export default router;

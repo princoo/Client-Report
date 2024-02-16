@@ -54,7 +54,7 @@ const login = async (req, res, next) => {
         req.user = user;
         return res
           .status(200)
-          .header('authenticate', token)
+          .header('Authorization', token)
           .json({
             Code: 200,
             Message: `Logged In Successfully as ${req.user.firstName} .`,

@@ -2,7 +2,7 @@ import { Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../config/db';
 import User from './user.model';
 
-const DailyReport = sequelize.define('Daily_report', {
+const DailyReport = sequelize.define('dailyReports', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -21,7 +21,7 @@ const DailyReport = sequelize.define('Daily_report', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  CatId: {
+  UserId: {
     type: Sequelize.UUID,
     allowNull: false,
     references: {
