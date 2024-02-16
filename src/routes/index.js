@@ -3,17 +3,17 @@ import userController from '../controllers/user.controller';
 import '../middleware/passport.middleware';
 import asyncWrapperHelper from '../helpers/asyncWrapper.helper';
 import validate from '../middleware/validation/validation.middleware';
-import userEmailExists from '../middleware/auth/userExists';
+import userExists from '../middleware/auth/userExists';
 import reportController from '../controllers/report.controller';
 import checkPermission, {
   isAuthenticated,
 } from '../middleware/auth/authentication';
-
 import {
   siteSchema,
   reportSchema,
   SignUpSchema,
   loginSchema,
+  roleSchema,
 } from '../utils/validationSchemas/schemas';
 import { addSite, removeSite } from '../controllers/site.controller';
 import {
@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
 router.post(
   '/signup',
   validate(SignUpSchema),
-  asyncWrapperHelper(userEmailExists),
+  asyncWrapperHelper(userExists.userEmailExists),
   asyncWrapperHelper(siteNameExists),
   asyncWrapperHelper(userController.signup),
 );
@@ -82,6 +82,16 @@ router.delete(
   asyncWrapperHelper(reportExists),
   asyncWrapperHelper(isReportOwner),
   asyncWrapperHelper(reportController.deleteReport),
+);
+router.patch(
+  '/role/change/:uid',
+  validate(roleSchema),
+  asyncWrapperHelper(isAuthenticated),
+  checkPermission('CATS_MENTOR'),
+  asyncWrapperHelper(userExists.isValidUser),
+  // below checks if you are trying to update other CATS_MENTOR's Role
+  asyncWrapperHelper(userExists.isSelfAction),
+  asyncWrapperHelper(userController.roleChange),
 );
 
 export default router;

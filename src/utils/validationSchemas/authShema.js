@@ -45,5 +45,11 @@ const loginSchema = Joi.object().keys({
   email: emailSchema,
   password: passwordSchema,
 });
+const roleSchema = Joi.object().keys({
+  role: Joi.string()
+    .valid('CATS', 'CATS_MENTOR')
+    .required()
+    .messages(errorMessage('Role')),
+});
 
-export { loginSchema, SignUpSchema };
+export { loginSchema, SignUpSchema, roleSchema };
