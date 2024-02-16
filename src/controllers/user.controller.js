@@ -1,5 +1,6 @@
 import passport from 'passport';
 import { generateToken } from '../utils/token.util';
+import userService from '../services/user.service';
 
 const signup = async (req, res, next) => {
   try {
@@ -67,7 +68,15 @@ const login = async (req, res, next) => {
   }
 };
 
+const roleChange = async (req, res) => {
+  const { uid } = req.params;
+  const { role } = req.body;
+  const data = await userService.changeUserRole(role, uid);
+  res.status(200).json({ code: 200, message: ' User role Changed', data });
+};
+
 export default {
   signup,
   login,
+  roleChange,
 };
