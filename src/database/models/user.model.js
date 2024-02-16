@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../config/db';
+import Sites from './sites.model';
 
 const User = sequelize.define('Users', {
   id: {
@@ -29,9 +30,14 @@ const User = sequelize.define('Users', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  site: {
-    type: Sequelize.STRING,
+  SiteId: {
+    type: DataTypes.UUID,
     allowNull: false,
+    references: {
+      model: 'Sites',
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
   },
   role: {
     type: DataTypes.ENUM('CATS', 'CATS_MENTOR'),
@@ -43,4 +49,5 @@ const User = sequelize.define('Users', {
   },
 });
 
+User.belongsTo(Sites, { onDelete: 'cascade' });
 export default User;

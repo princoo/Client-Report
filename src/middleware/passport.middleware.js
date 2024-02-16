@@ -25,8 +25,7 @@ passport.use(
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           phone: req.body.phone,
-          site: req.body.site,
-          // role: req.body.role,
+          SiteId: req.site.id,
           password: await hashPassword(password),
         };
         const user = await userServices.createUser(data);
