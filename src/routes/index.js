@@ -14,6 +14,7 @@ import {
   SignUpSchema,
   loginSchema,
   roleSchema,
+  supportGroupSchema,
 } from '../utils/validationSchemas/schemas';
 import { addSite, removeSite } from '../controllers/site.controller';
 import {
@@ -22,6 +23,9 @@ import {
   siteNameExists,
 } from '../middleware/site/siteExists';
 import { isReportOwner, reportExists } from '../middleware/report.middleware';
+import userTypeUtil from '../utils/userType.util';
+import Upload from '../helpers/multer.helper';
+import supportGroupController from '../controllers/supportGroup.controller';
 
 const router = express.Router();
 
@@ -92,6 +96,14 @@ router.patch(
   // below checks if you are trying to update other CATS_MENTOR's Role
   asyncWrapperHelper(userExists.isSelfAction),
   asyncWrapperHelper(userController.roleChange),
+);
+router.post(
+  '/supportgroup/add',
+  Upload,
+  validate(supportGroupSchema.supportGroup),
+  asyncWrapperHelper(isAuthenticated),
+  checkPermission(userTypeUtil.CATS),
+  asyncWrapperHelper(supportGroupController.addSupportGroup),
 );
 
 export default router;
