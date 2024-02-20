@@ -10,4 +10,11 @@ const supportGroup = Joi.object().keys({
   images: Joi.binary().min(1).messages(errorMessage('image')),
 });
 
-export default { supportGroup };
+const supportGroupImage = Joi.object().keys({
+  images: Joi.binary().min(1).messages(errorMessage('image')),
+});
+const imageToDelete = Joi.object().keys({
+  imageId: Joi.string().required().messages(errorMessage('image id')),
+});
+
+export default { supportGroup, supportGroupImage, imageToDelete };

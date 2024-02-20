@@ -1,5 +1,10 @@
 import Sites from '../database/models/sites.model';
 
+async function getAllSites() {
+  const data = await Sites.findAll();
+  return { data };
+}
+
 async function createSite(body) {
   const data = await Sites.create(body);
   return { data };
@@ -23,4 +28,5 @@ export default {
   getSiteByName,
   deleteSite,
   getSiteById,
+  getAllSites,
 };
