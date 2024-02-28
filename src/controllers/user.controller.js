@@ -13,6 +13,7 @@ const signup = async (req, res, next) => {
           id: user.id,
           email: user.email,
           role: user.role,
+          firstName: user.firstName,
           siteId: req.site.id,
           status: user.status,
         };
@@ -44,6 +45,7 @@ const login = async (req, res, next) => {
           id: user.id,
           email: user.email,
           role: user.role,
+          firstName: user.firstName,
           status: user.status,
         };
         if (user.status === 'INACTIVE') {
@@ -58,7 +60,7 @@ const login = async (req, res, next) => {
           .header('Authorization', token)
           .json({
             Code: 200,
-            Message: `Logged In Successfully as ${req.user.firstName} .`,
+            message: `Logged In Successfully as ${req.user.firstName} .`,
             token,
           });
       },

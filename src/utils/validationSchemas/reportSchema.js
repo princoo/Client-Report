@@ -2,7 +2,6 @@ import Joi from 'joi';
 import errorMessage from '../errorMessage.util';
 
 const dailyReportSchema = Joi.object().keys({
-  date: Joi.date().required().messages(errorMessage('Date')),
   clientName: Joi.string()
     .min(3)
     .max(30)
@@ -10,6 +9,7 @@ const dailyReportSchema = Joi.object().keys({
     .messages(errorMessage('Client name')),
   activityDone: Joi.string()
     .min(5)
+    .max(254)
     .required()
     .messages(errorMessage('Activity done')),
   discussedIssues: Joi.string()
