@@ -1,7 +1,7 @@
 import supportGroupService from '../services/supportGroup.service';
 
 const addSupportGroup = async (req, res) => {
-  const { date, description } = req.body;
+  const { date, description, title } = req.body;
   const imageToUpload = req.files;
 
   let url = [];
@@ -20,6 +20,7 @@ const addSupportGroup = async (req, res) => {
   const body = {
     date,
     description,
+    title,
     UserId: req.user.id,
   };
   // add supportgroup in DB
@@ -33,10 +34,10 @@ const addSupportGroup = async (req, res) => {
     return result;
   });
   // add images in DB
-  const addedImages = await Promise.all(imageToSend);
+  const SGroupImages = await Promise.all(imageToSend);
   res
     .status(200)
-    .json({ code: 200, message: 'supportGroup addded', data, addedImages });
+    .json({ code: 200, message: 'supportGroup addded', data, SGroupImages });
 };
 
 const addImage = async (req, res) => {
@@ -45,10 +46,10 @@ const addImage = async (req, res) => {
   let url = [];
   if (imagesToAdd) {
     const existingImages = req.supportGroupImages; // existing supportGroup images
-    if (imagesToAdd.length + existingImages.length > 4) {
+    if (imagesToAdd.length + existingImages.length > 2) {
       return res
         .status(400)
-        .json({ code: 400, message: 'Maximum of 4 images allowed.' });
+        .json({ code: 400, message: 'Maximum of 2 images allowed.' });
     }
 
     const uploadedImages = imagesToAdd.map(async (item) => {
@@ -71,7 +72,7 @@ const addImage = async (req, res) => {
     return res.status(200).json({
       code: 200,
       message: 'images added to supportGroup',
-      addedImages,
+      SGroupImages: addedImages,
     });
   }
   return res.status(400).json({ code: 400, message: 'No new image selected' });
@@ -97,7 +98,11 @@ const removeImage = async (req, res) => {
 
 const deleteSupportGroup = async (req, res) => {
   const { sid } = req.params;
-  const data = await supportGroupService.deleteSupportGroup(sid);
+  const response = await supportGroupService.deleteSupportGroup(sid);
+  const data = {
+    deletedId: sid,
+    response,
+  };
   return res
     .status(200)
     .json({ code: 200, message: 'Support group deleted', data });
@@ -119,10 +124,21 @@ const allSupportGroups = async (req, res) => {
     .json({ code: 200, message: 'support groups retrieved', data });
 };
 
+const getSingleSupportgroup = async (req, res) => {
+  const data = {
+    body: req.supportGroupAction,
+    images: req.supportGroupImages,
+  };
+  return res
+    .status(200)
+    .json({ code: 200, message: 'support group retrieved', data });
+};
+
 export default {
   addSupportGroup,
   addImage,
   removeImage,
   deleteSupportGroup,
   allSupportGroups,
+  getSingleSupportgroup,
 };

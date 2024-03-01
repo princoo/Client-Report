@@ -8,6 +8,7 @@ const supportGroup = Joi.object().keys({
     .required()
     .messages(errorMessage('Description')),
   images: Joi.binary().min(1).messages(errorMessage('image')),
+  title: Joi.string().min(3).required().messages(errorMessage('Title')),
 });
 
 const supportGroupImage = Joi.object().keys({

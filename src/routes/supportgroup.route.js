@@ -20,6 +20,12 @@ supportGroupRouter.get(
   asyncWrapperHelper(isAuthenticated),
   asyncWrapperHelper(supportGroupController.allSupportGroups),
 );
+supportGroupRouter.get(
+  '/:sid',
+  asyncWrapperHelper(isAuthenticated),
+  asyncWrapperHelper(supportGroupMiddleware.supportGroupExists),
+  asyncWrapperHelper(supportGroupController.getSingleSupportgroup),
+);
 supportGroupRouter.post(
   '/add',
   Upload,

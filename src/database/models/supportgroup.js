@@ -2,6 +2,7 @@ import { Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../config/db';
 // import Collection from './collection.model.js';
 import SGroupImages from './sgroupimages';
+import User from './user.model';
 
 const SupportGroups = sequelize.define('SupportGroups', {
   id: {
@@ -11,6 +12,10 @@ const SupportGroups = sequelize.define('SupportGroups', {
     primaryKey: true,
   },
   date: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  title: {
     type: Sequelize.STRING,
     allowNull: false,
   },
@@ -32,6 +37,10 @@ const SupportGroups = sequelize.define('SupportGroups', {
 
 SupportGroups.hasMany(SGroupImages, {
   as: 'SGroupImages',
+  onDelete: 'cascade',
+});
+SupportGroups.belongsTo(User, {
+  as: 'User',
   onDelete: 'cascade',
 });
 
