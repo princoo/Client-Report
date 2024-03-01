@@ -13,7 +13,16 @@ const DailyReport = async (req, res) => {
 };
 
 const getReports = async (req, res) => {
-  const data = await reportService.getUserTodayReports(req.user);
+  const { page = 1, pageSize = 10, sortOrder } = req.query;
+  const paginationOptions = {
+    page: parseInt(page, 10),
+    pageSize: parseInt(pageSize, 10),
+    sortOrder: sortOrder === 'asc' ? 'ASC' : 'DESC',
+  };
+  const data = await reportService.getUserTodayReports(
+    req.user,
+    paginationOptions,
+  );
   res.status(200).json({ code: 200, message: 'Reports retrieved', data });
 };
 const getSingleReport = async (req, res) => {
