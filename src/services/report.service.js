@@ -2,6 +2,7 @@ import { Op } from 'sequelize';
 import moment from 'moment';
 import DailyReport from '../database/models/dailyreport.model';
 import userTypeUtil from '../utils/userType.util';
+import paginate from '../helpers/paginator.helper';
 
 const createReport = async (body) => {
   const result = await DailyReport.create(body);
@@ -10,13 +11,18 @@ const createReport = async (body) => {
 const getReportsByUser = async (user) => {
   let result;
   if (user.role === userTypeUtil.CATS) {
-    result = await DailyReport.findAll({ where: { UserId: user.id } });
+    result = await DailyReport.findAll({
+      where: { UserId: user.id },
+      ...paginate(paginationObject),
+    });
   } else {
-    result = await DailyReport.findAll();
+    result = await DailyReport.findAll({
+      ...paginate(paginationObject),
+    });
   }
   return result;
 };
-const getUserTodayReports = async (user) => {
+const getUserTodayReports = async (user, paginationObject) => {
   let result;
   const formattedDate = moment().format('YYYY-MM-DD');
   if (user.role === userTypeUtil.CATS) {
@@ -30,6 +36,7 @@ const getUserTodayReports = async (user) => {
           ],
         },
       },
+      ...paginate(paginationObject),
     });
   } else {
     result = await DailyReport.findAll({
@@ -41,6 +48,7 @@ const getUserTodayReports = async (user) => {
           ],
         },
       },
+      ...paginate(paginationObject),
     });
   }
   return result;

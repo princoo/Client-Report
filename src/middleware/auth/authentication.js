@@ -36,6 +36,4 @@ const checkPermission = (role) => (req, res, next) => {
   return res.status(401).json({ code: 401, message: 'Unauthorized' });
 };
 
-export default checkPermission;
-
-export { isActive, isAuthenticated };
+export { isActive, isAuthenticated, checkPermission };
