@@ -7,7 +7,6 @@ const supportGroupExists = async (req, res, next) => {
     if (data.UserId === req.user.id) {
       req.supportGroupAction = data;
       req.supportGroupImages = await data.getSGroupImages(); // get all supportgroup images
-      console.log(req.supportGroupImages);
       return next();
     }
     return res.status(404).json({
