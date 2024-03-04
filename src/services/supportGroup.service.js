@@ -25,6 +25,13 @@ async function addSupportGroup(body) {
   const result = await SupportGroups.create(body);
   return result;
 }
+async function updateSupportGroup(body, id) {
+  const result = await SupportGroups.update(body, {
+    where: { id },
+    returning: true,
+  });
+  return result;
+}
 async function deleteSupportGroup(id) {
   const result = await SupportGroups.destroy({
     where: { id },
@@ -90,4 +97,5 @@ export default {
   removeImage,
   getSupportGroupById,
   getSupportGroupByUser,
+  updateSupportGroup,
 };
