@@ -59,5 +59,13 @@ supportGroupRouter.delete(
   asyncWrapperHelper(checkImageMiddleware.imageExists),
   asyncWrapperHelper(supportGroupController.removeImage),
 );
+supportGroupRouter.patch(
+  '/:sid',
+  validate(supportGroupSchema.supportGroupUpdate),
+  asyncWrapperHelper(isAuthenticated),
+  checkPermission(userTypeUtil.CATS),
+  asyncWrapperHelper(supportGroupMiddleware.supportGroupExists),
+  asyncWrapperHelper(supportGroupController.updateSupportGroup),
+);
 
 export default supportGroupRouter;

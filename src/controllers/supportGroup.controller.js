@@ -47,9 +47,10 @@ const addImage = async (req, res) => {
   if (imagesToAdd) {
     const existingImages = req.supportGroupImages; // existing supportGroup images
     if (imagesToAdd.length + existingImages.length > 2) {
-      return res
-        .status(400)
-        .json({ code: 400, message: 'Maximum of 2 images allowed.' });
+      return res.status(400).json({
+        code: 400,
+        message: 'cant exceed. Maximum of 2 images allowed.',
+      });
     }
 
     const uploadedImages = imagesToAdd.map(async (item) => {
@@ -82,9 +83,10 @@ const removeImage = async (req, res) => {
   const { imagesToRemove } = req;
   const SGroupImages = req.supportGroupImages; // existing supportGroup images
   if (SGroupImages.length - imagesToRemove.length <= 0) {
-    return res
-      .status(400)
-      .json({ code: 400, message: 'Maximum of 4 images allowed.' });
+    return res.status(400).json({
+      code: 400,
+      message: ' Cant Delete. Minimum of 1 image required.',
+    });
   }
   const imageDeletion = imagesToRemove.map(async (item) => {
     const data = await supportGroupService.removeImage(item);
@@ -134,6 +136,12 @@ const getSingleSupportgroup = async (req, res) => {
     .json({ code: 200, message: 'support group retrieved', data });
 };
 
+const updateSupportGroup = async (req, res) => {
+  const { sid } = req.params;
+  const data = await supportGroupService.updateSupportGroup(req.body, sid);
+  res.status(200).json({ code: 200, message: 'SupportGroup updated', data });
+};
+
 export default {
   addSupportGroup,
   addImage,
@@ -141,4 +149,5 @@ export default {
   deleteSupportGroup,
   allSupportGroups,
   getSingleSupportgroup,
+  updateSupportGroup,
 };
