@@ -4,6 +4,7 @@ import paginate from '../helpers/paginator.helper';
 import userTypeUtil from '../utils/userType.util';
 import HVisitImages from '../database/models/hvisitimages.model';
 import HomeVisits from '../database/models/homevisit.model';
+import User from '../database/models/user.model';
 
 async function uploadToCloudinary(path) {
   const image = await Cloudinary.uploader.upload(path);
@@ -40,10 +41,32 @@ async function getHomeVisitByUser(user, paginationObject) {
     result = await HomeVisits.findAll({
       where: { UserId: user.id },
       ...paginate(paginationObject),
+      include: [
+        {
+          model: HVisitImages,
+          as: 'HVisitImages',
+        },
+        {
+          model: User,
+          as: 'User',
+          attributes: ['firstName', 'lastName', 'email', 'phone'],
+        },
+      ],
     });
   } else {
     result = await HomeVisits.findAll({
       ...paginate(paginationObject),
+      include: [
+        {
+          model: HVisitImages,
+          as: 'HVisitImages',
+        },
+        {
+          model: User,
+          as: 'User',
+          attributes: ['firstName', 'lastName', 'email', 'phone'],
+        },
+      ],
     });
   }
   return result;

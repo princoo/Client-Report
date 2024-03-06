@@ -15,7 +15,7 @@ import checkImageMiddleware from '../middleware/checkImage.middleware';
 const HomevisitRouter = express.Router();
 
 HomevisitRouter.get(
-  '/all',
+  '/',
   asyncWrapperHelper(isAuthenticated),
   asyncWrapperHelper(homeVisitController.allHomevisits),
 );

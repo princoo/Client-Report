@@ -4,7 +4,10 @@ const homeVisitExists = async (req, res, next) => {
   const { hid } = req.params;
   const data = await homeVisitService.getHomeVisitById(hid);
   if (data != null) {
-    if (data.UserId === req.user.id) {
+    if (
+      data.UserId === req.user.id ||
+      req.user.role === userTypeUtil.CATS_MENTOR
+    ) {
       req.homeVisit = data;
       req.homeVisitImages = await data.getHVisitImages(); // get all homevisit images
       return next();

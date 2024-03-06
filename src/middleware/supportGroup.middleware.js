@@ -1,10 +1,14 @@
 import supportGroupService from '../services/supportGroup.service';
+import userTypeUtil from '../utils/userType.util';
 
 const supportGroupExists = async (req, res, next) => {
   const { sid } = req.params;
   const data = await supportGroupService.getSupportGroupById(sid);
   if (data != null) {
-    if (data.UserId === req.user.id) {
+    if (
+      data.UserId === req.user.id ||
+      req.user.role === userTypeUtil.CATS_MENTOR
+    ) {
       req.supportGroupAction = data;
       req.supportGroupImages = await data.getSGroupImages(); // get all supportgroup images
       return next();
