@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../config/db';
 import HVisitImages from './hvisitimages.model';
+import User from './user.model';
 
 const HomeVisits = sequelize.define('HomeVisits', {
   id: {
@@ -14,6 +15,10 @@ const HomeVisits = sequelize.define('HomeVisits', {
     allowNull: false,
   },
   clientName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  phone: {
     type: Sequelize.STRING,
     allowNull: false,
   },
@@ -35,6 +40,10 @@ const HomeVisits = sequelize.define('HomeVisits', {
 
 HomeVisits.hasMany(HVisitImages, {
   as: 'HVisitImages',
+  onDelete: 'cascade',
+});
+HomeVisits.belongsTo(User, {
+  as: 'User',
   onDelete: 'cascade',
 });
 

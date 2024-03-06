@@ -2,14 +2,14 @@ import uploadToCloudinary from '../helpers/uploadImage.helper';
 import homeVisitService from '../services/homeVisit.service';
 
 const addHomevisit = async (req, res) => {
-  const { date, clientName, description } = req.body;
+  const { date, clientName, description, phone } = req.body;
   const imageToUpload = req.files;
 
   let url = [];
   if (imageToUpload.length > 4 || imageToUpload.length < 1) {
     return res
       .status(400)
-      .json({ message: 'Minimun of 1 and Maximum of 4 images allowed.' });
+      .json({ message: 'Minimun of 1 and image required.' });
   }
   const uploadedImages = imageToUpload.map(async (item) => {
     const { image } = await uploadToCloudinary(item.path);
@@ -22,6 +22,7 @@ const addHomevisit = async (req, res) => {
     date,
     clientName,
     description,
+    phone,
     UserId: req.user.id,
   };
   // add supportgroup in DB
@@ -35,10 +36,14 @@ const addHomevisit = async (req, res) => {
     return result;
   });
   // add images in DB
-  const addedImages = await Promise.all(imageToSend);
-  res
-    .status(200)
-    .json({ code: 200, message: 'HomeVisit addded', data, addedImages });
+  const HVisitImages = await Promise.all(imageToSend);
+  res.status(200).json({
+    code: 200,
+    message: 'HomeVisit addded',
+    data,
+    HVisitImages,
+    User: req.user,
+  });
 };
 
 const addImage = async (req, res) => {

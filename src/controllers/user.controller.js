@@ -14,7 +14,8 @@ const signup = async (req, res, next) => {
           email: user.email,
           role: user.role,
           firstName: user.firstName,
-          siteId: req.site.id,
+          lastName: user.lastName,
+          phone: user.phone,
           status: user.status,
         };
         // generate token
@@ -46,6 +47,8 @@ const login = async (req, res, next) => {
           email: user.email,
           role: user.role,
           firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone,
           status: user.status,
         };
         if (user.status === 'INACTIVE') {

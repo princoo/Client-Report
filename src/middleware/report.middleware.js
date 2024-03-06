@@ -12,7 +12,10 @@ const reportExists = async (req, res, next) => {
 const isReportOwner = async (req, res, next) => {
   const { rid } = req.params;
   const data = await reportService.getReportById(rid);
-  if (req.user.id === data.UserId) {
+  if (
+    req.user.id === data.UserId ||
+    req.user.role === userTypeUtil.CATS_MENTOR
+  ) {
     return next();
   }
   res.status(401).json({ code: 401, message: 'UnAuthorized on this report' });

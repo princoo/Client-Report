@@ -7,6 +7,7 @@ const homeVisit = Joi.object().keys({
     .min(3)
     .required()
     .messages(errorMessage('clientName')),
+  phone: Joi.number().required().messages(errorMessage('phoneNumber')),
   description: Joi.string()
     .min(3)
     .required()

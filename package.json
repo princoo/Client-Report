@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node dist/index.js",
-    "dev": "npm run build && nodemon dist/index.js",
+    "dev": "npm run build && nodemon src/index.js",
     "build-and-install": "npm install && npm run build",
     "build": "babel src -d dist",
     "prepare": "husky install",
