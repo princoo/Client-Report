@@ -2,6 +2,7 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import { comparePassword, hashPassword } from '../utils/password.util';
 import userServices from '../services/user.service';
+import weeklyPlanService from '../services/weeklyPlan.service';
 
 passport.deserializeUser(function (user, done) {
   done(null, user);
@@ -29,6 +30,7 @@ passport.use(
           password: await hashPassword(password),
         };
         const user = await userServices.createUser(data);
+        await weeklyPlanService.createWeeklyPlay(user.dataValues.id); // create weeklyPlan for the new User
         done(null, user.dataValues);
       } catch (error) {
         done(error);
