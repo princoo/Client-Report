@@ -11,6 +11,7 @@ import supportGroupRouter from './supportgroup.route';
 import roleRouter from './role.router';
 import reportRouter from './report.router';
 import siteRouter from './site.router';
+import taskRouter from './weekTask.route';
 
 const router = express.Router();
 
@@ -36,6 +37,7 @@ router.use('/role', roleRouter);
 router.use('/report', reportRouter);
 router.use('/supportgroup', supportGroupRouter);
 router.use('/homevisit', HomevisitRouter);
+router.use('/task', taskRouter);
 
 router.use('*', (req, res) => {
   res.status(404).json({
