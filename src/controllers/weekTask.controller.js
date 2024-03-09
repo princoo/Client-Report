@@ -30,5 +30,26 @@ const updateWeekTask = async (req, res) => {
   const data = await weekTaskService.updateTask(body, tid);
   res.status(200).json({ code: 200, message: 'Task Updated', data });
 };
+const updateStatus = async (req, res) => {
+  const { tid } = req.params;
+  const { status } = req.task;
+  let updatedStatus;
+  if (status === 'PENDING') {
+    updatedStatus = 'COMPLETED';
+  } else {
+    updatedStatus = 'PENDING';
+  }
+  const body = {
+    status: updatedStatus,
+  };
+  const data = await weekTaskService.updateTask(body, tid);
+  res.status(200).json({ code: 200, message: 'Task status Updated', data });
+};
 
-export default { addWeekTask, getWeekTask, deleteWeekTask, updateWeekTask };
+export default {
+  addWeekTask,
+  getWeekTask,
+  deleteWeekTask,
+  updateWeekTask,
+  updateStatus,
+};

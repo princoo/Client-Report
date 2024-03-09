@@ -16,6 +16,11 @@ const WeekTasks = sequelize.define('WeekTasks', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  status: {
+    type: DataTypes.ENUM('PENDING', 'COMPLETED'),
+    allowNull: false,
+    defaultValue: 'PENDING',
+  },
   WeeklyPlanId: {
     type: DataTypes.UUID,
     allowNull: false,

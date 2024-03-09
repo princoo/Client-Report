@@ -5,6 +5,7 @@ const weekTaskExists = async (req, res, next) => {
   const data = await weekTaskService.getTaskById(tid);
   if (data) {
     if (data.WeeklyPlanId === req.weeklyPlan.id) {
+      req.task = data;
       return next();
     }
     res.status(401).json({ code: 401, message: 'Unauthorized on this task' });
