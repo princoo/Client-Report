@@ -37,5 +37,12 @@ taskRouter.patch(
   asyncWrapperHelper(weekTaskMiddleware.weekTaskExists),
   asyncWrapperHelper(weekTaskController.updateWeekTask),
 );
+taskRouter.patch(
+  '/status/:tid',
+  asyncWrapperHelper(isAuthenticated),
+  asyncWrapperHelper(weeklyPlanMiddleware.weeklyPlanAvailable),
+  asyncWrapperHelper(weekTaskMiddleware.weekTaskExists),
+  asyncWrapperHelper(weekTaskController.updateStatus),
+);
 
 export default taskRouter;

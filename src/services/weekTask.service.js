@@ -33,6 +33,7 @@ const updateTask = async (body, id) => {
   });
   return result;
 };
+
 const deleteTask = async (id) => {
   const result = await WeekTasks.destroy({ where: { id } });
   return result;
