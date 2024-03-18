@@ -12,6 +12,7 @@ const taskRouter = express.Router();
 taskRouter.post(
   '/add',
   validate(weekTaskSchema.addTaskSchema),
+  asyncWrapperHelper(weekTaskMiddleware.futureDateMiddleware),
   asyncWrapperHelper(isAuthenticated),
   asyncWrapperHelper(weeklyPlanMiddleware.weeklyPlanAvailable),
   asyncWrapperHelper(weekTaskController.addWeekTask),

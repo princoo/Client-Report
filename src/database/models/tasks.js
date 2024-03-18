@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db';
+import WeeklyPlan from './weeklyplan';
 
 const WeekTasks = sequelize.define('WeekTasks', {
   id: {
@@ -31,5 +32,7 @@ const WeekTasks = sequelize.define('WeekTasks', {
     onDelete: 'CASCADE',
   },
 });
+
+WeekTasks.belongsTo(WeeklyPlan, { onDelete: 'cascade' });
 
 export default WeekTasks;
