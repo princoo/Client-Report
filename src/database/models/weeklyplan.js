@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../config/db';
-import WeekTasks from './tasks';
+// import WeekTasks from './tasks';
 import User from './user.model';
 
 const WeeklyPlan = sequelize.define('WeeklyPlans', {
@@ -21,9 +21,6 @@ const WeeklyPlan = sequelize.define('WeeklyPlans', {
   },
 });
 
-WeeklyPlan.hasMany(WeekTasks, {
-  onDelete: 'cascade',
-});
 WeeklyPlan.belongsTo(User, {
   onDelete: 'cascade',
 });
