@@ -2,13 +2,28 @@ import weekTaskService from '../services/weekTask.service';
 
 const addWeekTask = async (req, res) => {
   const { description, dueDate } = req.body;
+  const { firstName, lastName } = req.user;
   const { id } = req.weeklyPlan;
   const body = {
     description,
     WeeklyPlanId: id,
     dueDate,
   };
-  const data = await weekTaskService.createTask(body);
+  const returnedData = await weekTaskService.createTask(body);
+  const task = returnedData;
+  const data =
+    // Add additional properties to each task object
+    {
+      ...task.dataValues,
+      WeeklyPlan: {
+        id,
+        User: {
+          id: req.user.id,
+          firstName,
+          lastName,
+        },
+      },
+    };
   res.status(200).json({ code: 200, message: 'Task created', data });
 };
 const getWeekTask = async (req, res) => {
