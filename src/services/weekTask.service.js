@@ -93,6 +93,10 @@ const updateTask = async (body, id) => {
   });
   return result;
 };
+const clearAllTasks = async () => {
+  const result = await WeekTasks.truncate();
+  return result;
+};
 
 const deleteTask = async (id) => {
   const result = await WeekTasks.destroy({ where: { id } });
@@ -107,4 +111,5 @@ export default {
   getTasksByPlanId,
   getEndOfWeek,
   getTaskByUser,
+  clearAllTasks,
 };
