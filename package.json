@@ -64,7 +64,7 @@
     "@joi/date": "^2.1.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
-    "cloudinary": "^2.0.1",
+    "cloudinary": "^2.0.2",
     "cloudinary-build-url": "^0.2.4",
     "core-js": "^3.35.1",
     "cors": "^2.8.5",
