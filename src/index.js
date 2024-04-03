@@ -6,6 +6,8 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 import ErrorHandler from './middleware/errorHandler.middleware';
 import router from './routes';
+import clearTasksJob from './jobs/clearTasks.job';
+
 // eslint-disable-next-line no-unused-vars
 import sequelize from './database/config/db';
 
@@ -33,3 +35,5 @@ app.use(ErrorHandler);
 app.listen(PORT, () => {
   console.log('server running on', PORT);
 });
+
+clearTasksJob();
